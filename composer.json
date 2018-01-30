@@ -1,0 +1,25 @@
+{
+  "name": "linkorb/stamp",
+  "description": "Stamp: Generate common repository files like README.md, LICENSE, etc",
+  "homepage": "https://github.com/linkorb/stamp",
+  "keywords": ["stamp", "linkorb"],
+  "type": "library",
+  "authors": [
+    {
+      "name": "Joost Faassen",
+      "email": "j.faassen@linkorb.com",
+      "role": "Development"
+    }
+  ],
+  "require": {
+    "symfony/console": "~3.0",
+    "symfony/yaml": "~3.0",
+    "twig/twig": "~1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Stamp\\": "src/"
+    }
+  },
+  "license": "MIT"
+}

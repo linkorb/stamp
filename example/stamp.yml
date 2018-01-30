@@ -1,0 +1,24 @@
+variables:
+  project:
+    title: Hello world
+
+files:
+  README.md:
+    template: README.md.twig
+    variables:
+      title: Hello world
+      blocks:
+        - "@doc/intro.md"
+        - "@doc/installation.md"
+        - "## Makefile\n"
+        - "@https://raw.githubusercontent.com/rodrigorm/phpqa-make/master/Makefile"
+
+  LICENSE.md:
+    template: https://raw.githubusercontent.com/IQAndreas/markdown-licenses/master/mit.md
+  
+  # CONTRIBUTING.md:
+  #   template: https://example.com/stamps/CONTRIBUTING.md.twig
+  # Dockerfile:
+  #   template: https://example.com/stamps/Dockerfile.twig
+  # .github/CONTRIBUTING.md:
+  #   template: https://example.com/stamps/CONTRIBUTING.md.twig
