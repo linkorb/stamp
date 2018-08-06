@@ -22,4 +22,5 @@ require $loader;
 $application = new Application('Stamp', '1.0.0');
 $application->setCatchExceptions(true);
 $application->add(new \Stamp\Command\GenerateCommand());
+$application->add(new \Stamp\Command\AnalyzeCommand());
 $application->run();

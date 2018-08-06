@@ -12,7 +12,7 @@ use Stamp\Loader\YamlProjectLoader;
 use Stamp\Generator;
 use RuntimeException;
 
-class GenerateCommand extends Command
+class AnalyzeCommand extends Command
 {
     /**
      * {@inheritdoc}
@@ -22,8 +22,8 @@ class GenerateCommand extends Command
         $this->ignoreValidationErrors();
 
         $this
-            ->setName('generate')
-            ->setDescription('Generate files from stamp.yml')
+            ->setName('analyze')
+            ->setDescription('Analyze a project directory')
             ->addOption(
                 'config',
                 'c',
@@ -49,8 +49,7 @@ class GenerateCommand extends Command
 
         $projectLoader = new YamlProjectLoader();
         $project = $projectLoader->loadFile($configFilename);
-        //var_dump($project);
-        $generator = new Generator($project);
-        $generator->generate();
+        $data = $project->getData();
+        $output->writeLn(json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));
     }
 }

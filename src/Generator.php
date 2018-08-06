@@ -35,7 +35,10 @@ class Generator
         $data = array_replace_recursive($this->project->getVariables(), $file->getVariables());
 
         array_walk_recursive($data, [$this, 'process']);
-
+        $data = array_merge_recursive(
+            $data,
+            ['analyzer' => $this->project->analyze()]
+        );
         $rendered = $twig->render($templateString, $data);
 
         file_put_contents($this->project->getBasePath() . '/' . $file->getName(), $rendered);

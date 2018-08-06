@@ -15,15 +15,9 @@ class ArrayProjectLoader
         }
         $project = new Project($basePath, $variables);
         
-        foreach ($data['files'] as $name => $fileData) {
-            $template = null;
-            if (isset($fileData['template'])) {
-                $template = $fileData['template'];
-            }
-            $variables = [];
-            if (isset($fileData['variables'])) {
-                $variables = $fileData['variables'];
-            }
+        foreach ($data['files'] ?? [] as $name => $fileData) {
+            $template = $fileData['template'] ?? null;
+            $variables = $fileData['variables'] ?? [];
             $file = new File($name, $template, $variables);
             $project->addFile($file);
         }
