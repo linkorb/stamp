@@ -4,7 +4,7 @@ namespace Stamp\Analyzer;
 
 use Stamp\Model\Project;
 
-class ComposerJsonAnalyzer extends Analyzer
+class BowerJsonAnalyzer extends Analyzer
 {
     public function analyze(Project $project): ?array
     {

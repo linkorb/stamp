@@ -11,7 +11,14 @@ class Project
     protected $basePath;
 
     protected $analyzerClasses = [
+        Analyzer\AnonymizerYmlAnalyzer::class,
+        Analyzer\BowerJsonAnalyzer::class,
+        Analyzer\CircleciConfigYmlAnalyzer::class,
         Analyzer\ComposerJsonAnalyzer::class,
+        Analyzer\DockerComposeYmlAnalyzer::class,
+        Analyzer\DockerfileAnalyzer::class,
+        Analyzer\EditorconfigAnalyzer::class,
+        Analyzer\FixturesAnalyzer::class,
         Analyzer\PackageJsonAnalyzer::class,
     ];
 
