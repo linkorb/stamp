@@ -60,18 +60,18 @@ You can use the following command to debug the data that will be injected into a
 
 ## Todo:
 
-* [ ] Analyzer for `Dockerfile`: Simply define a variable if it exists.
-* [ ] Analyzer for `docker-compose.yml`: Import the YAML as-is. Can be used to list defined containers.
-* [ ] Analyzer for `Makefile`: Import the targets + comments, using the regex in `example/Makefile`
-* [ ] Analyzer for `bower.json`: Import the YAML as-is. Can be used to list jobs
+* [x] Analyzer for `Dockerfile`: Simply define a variable if it exists.
+* [x] Analyzer for `docker-compose.yml`: Import the YAML as-is. Can be used to list defined containers.
+* [x] Analyzer for `Makefile`: Import the targets + comments, using the regex in `example/Makefile`
+* [x] Analyzer for `bower.json`: Import the JSON as-is. Can be used to list jobs
 * [ ] Analyzer for `.env.dist`: Import variables, their default values, and comments (line before the variable)
-* [ ] Analyzer for `.circleci/config.yml`: Import the YAML as-is. Can be used to list jobs
-* [ ] Analyzer for `.editorconfig`: Simply define a variable if it exists.
+* [x] Analyzer for `.circleci/config.yml`: Import the YAML as-is. Can be used to list jobs
+* [x] Analyzer for `.editorconfig`: Simply define a variable if it exists.
 * [ ] Analyzer for `schema.xml`: Used to document schema
 * [ ] Analyzer for `routes`: Used to document routes. Looks for `app/config/routes.yml` or uses symfony `bin/console debug:routes --format JSON` to import route data
 * [ ] Analyzer for `doctrine-schema`: Find a way to load doctrine schema into an array for entity documentation
-* [ ] Analyzer for `fixtures.yml`: (Haigha). Simply define a variable if it exists.
-* [ ] Analyzer for `anonymizer.yml`: Simply define a variable if it exists.
+* [x] Analyzer for `fixtures`: (Haigha). Simply define a variable if it exists.
+* [x] Analyzer for `anonymizer.yml`: Simply define a variable if it exists.
 * [ ] Analyzer for `github`: Request repository data like contributors, title, etc.
 * [ ] Allow to use project variables in template filenames/urls (i.e. to fetch the proper license file)
 * [ ] Allow to use either twig or handlebars templates (using `zordius/lightncandy`)
