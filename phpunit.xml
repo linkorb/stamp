@@ -1,8 +1,7 @@
-<phpunit colors="true" bootstrap="tests/bootstrap.php">
+<phpunit bootstrap="vendor/autoload.php">
   <testsuites>
-    <testsuite name="test">
+    <testsuite name="tests">
       <directory>tests</directory>
-      <exclude>tests/bootstrap.php</exclude>
     </testsuite>
   </testsuites>
 </phpunit>
