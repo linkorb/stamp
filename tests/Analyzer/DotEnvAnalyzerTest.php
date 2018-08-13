@@ -32,7 +32,7 @@ final class DotEnvAnalyzerrTest extends TestCase
                 ],
                 [
                     "name" => 'XYZ_TOKEN',
-                    "default" =>  'super-secret',
+                    "default" =>  '"MTIzNA=="',
                     "comment" => 'Token to do XYZ'
                 ],
             ],

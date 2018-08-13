@@ -34,7 +34,7 @@ class DotEnvAnalyzer extends Analyzer
                     $comments[] = $this->trimComment($commentSplitted[1]);
                 }
 
-                $varSplitted = explode('=', $commentSplitted[0]);
+                $varSplitted = explode('=', $commentSplitted[0], 2);
 
                 $vars[] = $this->newEnvVar(
                     $varSplitted[0],
