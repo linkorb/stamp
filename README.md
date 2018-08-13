@@ -64,7 +64,7 @@ You can use the following command to debug the data that will be injected into a
 * [x] Analyzer for `docker-compose.yml`: Import the YAML as-is. Can be used to list defined containers.
 * [x] Analyzer for `Makefile`: Import the targets + comments, using the regex in `example/Makefile`
 * [x] Analyzer for `bower.json`: Import the JSON as-is. Can be used to list jobs
-* [ ] Analyzer for `.env.dist`: Import variables, their default values, and comments (line before the variable)
+* [x] Analyzer for `.env.dist`: Import variables, their default values, and comments (line before the variable)
 * [x] Analyzer for `.circleci/config.yml`: Import the YAML as-is. Can be used to list jobs
 * [x] Analyzer for `.editorconfig`: Simply define a variable if it exists.
 * [ ] Analyzer for `schema.xml`: Used to document schema
