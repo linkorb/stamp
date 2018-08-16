@@ -14,12 +14,12 @@ class RadvanceRoutesAnalyzer extends Analyzer
         // Things can fail in the bootstrap-file itself.
         // Therefore handling Radvance with care.
         try {
-            if ($routes = $this->getAppRoutes($project)) {
-                return ['route_collection' => $this->convertRoutes($routes)];
+            if ($appRoutes = $this->getAppRoutes($project)) {
+                return ['route_collection' => $this->convertRoutes($appRoutes)];
             } else {
                 return null;
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -28,9 +28,10 @@ class RadvanceRoutesAnalyzer extends Analyzer
     {
         return array_map(function(Route $route) {
             return [
-                'path'     => $route->getPath(),
-                'methods'  => $route->getMethods(),
-                'defaults' => $route->getDefaults()
+                'path'       => $route->getPath(),
+                'method'     => $route->getMethods() ? join('|', $route->getMethods()) : 'ANY',
+                'controller' => current($route->getDefaults()), // _controller seems unreachable..
+                'host'       => $route->getHost() ? $route->getHost() : 'ANY'
             ];
         }, $routeCollection->all());
     }
@@ -44,7 +45,7 @@ class RadvanceRoutesAnalyzer extends Analyzer
         }
 
         require_once($autoloadPath);
-    
+
         $envPath = $this->getFilepath($project, '.env');
         if (file_exists($envPath)) {
             $dotenv = new DotEnv();
@@ -54,7 +55,7 @@ class RadvanceRoutesAnalyzer extends Analyzer
         $appPath = $this->getFilepath($project, 'app/bootstrap.php');
 
         if (file_exists($appPath)) {
-            return require($appPath)['routes'];
+            return (require($appPath))['routes'];
         } else {
             return null;
         }
