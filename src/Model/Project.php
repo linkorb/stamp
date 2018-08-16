@@ -22,6 +22,7 @@ class Project
         Analyzer\FixturesAnalyzer::class,
         Analyzer\MakefileAnalyzer::class,
         Analyzer\PackageJsonAnalyzer::class,
+        Analyzer\RadvanceRoutesAnalyzer::class
     ];
 
     public function __construct($basePath, $variables = [])
