@@ -14,7 +14,9 @@
   "require": {
     "symfony/console": "~3.0",
     "symfony/yaml": "~3.0",
-    "twig/twig": "~1.0"
+    "twig/twig": "~1.0",
+    "symfony/dotenv": "^4.1",
+    "symfony/routing": "^4.1"
   },
   "autoload": {
     "psr-4": {
