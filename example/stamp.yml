@@ -2,6 +2,10 @@ variables:
   project:
     title: Hello world
     license: mit
+  radvance:
+    schema:
+      references:
+        username: user_data
 
 files:
   README.md:

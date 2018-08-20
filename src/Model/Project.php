@@ -23,7 +23,8 @@ class Project
         Analyzer\MakefileAnalyzer::class,
         Analyzer\PackageJsonAnalyzer::class,
         Analyzer\RadvanceRoutesAnalyzer::class,
-        Analyzer\SymfonyRoutesAnalyzer::class
+        Analyzer\RadvanceSchemaAnalyzer::class,
+        Analyzer\SymfonyRoutesAnalyzer::class,
     ];
 
     public function __construct($basePath, $variables = [])

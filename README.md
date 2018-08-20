@@ -67,7 +67,7 @@ You can use the following command to debug the data that will be injected into a
 * [x] Analyzer for `.env.dist`: Import variables, their default values, and comments (line before the variable)
 * [x] Analyzer for `.circleci/config.yml`: Import the YAML as-is. Can be used to list jobs
 * [x] Analyzer for `.editorconfig`: Simply define a variable if it exists.
-* [ ] Analyzer for `schema.xml`: Used to document schema
+* [x] Analyzer for `schema.xml`: Used to document schema
 * [x] Analyzer for `routes`: Used to document routes. Looks for `app/config/routes.yml` (Radvance)
 * [x] Analyzer for `routes`: Used to document routes. Uses symfony `bin/console debug:router --format JSON` to import route data
 * [ ] Analyzer for `doctrine-schema`: Find a way to load doctrine schema into an array for entity documentation
