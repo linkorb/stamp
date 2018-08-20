@@ -17,6 +17,7 @@ class Project
         Analyzer\ComposerJsonAnalyzer::class,
         Analyzer\DockerComposeYmlAnalyzer::class,
         Analyzer\DockerfileAnalyzer::class,
+        Analyzer\DoctrineSchemaAnalyzer::class,
         Analyzer\DotEnvAnalyzer::class,
         Analyzer\EditorconfigAnalyzer::class,
         Analyzer\FixturesAnalyzer::class,

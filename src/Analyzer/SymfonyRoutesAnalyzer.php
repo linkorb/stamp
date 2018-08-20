@@ -38,12 +38,12 @@ class SymfonyRoutesAnalyzer extends Analyzer
 
     private function getAppRoutes(Project $project): ?array
     {
-        $console = $this->getFilepath($project, 'bin/console');
+        $out = $this->console($project, "debug:router --format=json");
 
-        if (!file_exists($console)) {
+        if ($out) {
+            return json_decode($out, true);
+        } else {
             return null;
         }
-        $out = shell_exec('bin/console debug:router --format=json');
-        return json_decode($out, true);
     }
 }

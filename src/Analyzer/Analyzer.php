@@ -29,4 +29,19 @@ abstract class Analyzer
             return null;
         }
     }
+
+    protected function hasConsole(Project $project): bool {
+        return file_exists(
+            $this->getFilepath($project, 'bin/console')
+        );
+    }
+    protected function console(Project $project, string $cmd): ?string {
+        $console = $this->getFilepath($project, 'bin/console');
+
+        if (!$this->hasConsole($project)) {
+            return null;
+        }
+
+        return shell_exec("$console $cmd");
+    }
 }

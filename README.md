@@ -70,7 +70,7 @@ You can use the following command to debug the data that will be injected into a
 * [x] Analyzer for `schema.xml`: Used to document schema
 * [x] Analyzer for `routes`: Used to document routes. Looks for `app/config/routes.yml` (Radvance)
 * [x] Analyzer for `routes`: Used to document routes. Uses symfony `bin/console debug:router --format JSON` to import route data
-* [ ] Analyzer for `doctrine-schema`: Find a way to load doctrine schema into an array for entity documentation
+* [x] Analyzer for `doctrine-schema`: Find a way to load doctrine schema into an array for entity documentation
 * [x] Analyzer for `fixtures`: (Haigha). Simply define a variable if it exists.
 * [x] Analyzer for `anonymizer.yml`: Simply define a variable if it exists.
 * [ ] Analyzer for `github`: Request repository data like contributors, title, etc.
