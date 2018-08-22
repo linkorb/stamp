@@ -1,0 +1,7 @@
+table.comments:
+    random_comment{1..5}:
+        author_user_name: <randomElement(array ('charlie', 'bob', 'alice'))>
+        author_display_name: <randomElement(array ('charlie', 'bob', 'alice'))>
+        created_at: <date('Y-m-d H:i:s', $this->fake('dateTime'))>
+        message:  <paragraph(2)>
+        status: <randomElement(array ('APPROVED', 'REVIEW'))>

@@ -52,17 +52,17 @@ When the template files end in `.twig`, Stamp will use Twig to process the templ
 
 ## Development / debugging:
 
-The `example/` directory contains a collection of common files. While developing analyzers, you can run `./bin/stamp generate -c example/stamp.yml` to run stamp in the context of the `example/` directory.
+The `examples/` directory contains a collection of common files. While developing analyzers, you can run `./bin/stamp generate -c examples/full-project/stamp.yml` to run stamp in the context of the `examples/full-project/` directory.
 
 You can use the following command to debug the data that will be injected into any templates (including the output from the analyzers): 
 
-    ./bin/stamp generate -c example/stamp.yml
+    ./bin/stamp generate -c examples/full-project/stamp.yml
 
 ## Todo:
 
 * [x] Analyzer for `Dockerfile`: Simply define a variable if it exists.
 * [x] Analyzer for `docker-compose.yml`: Import the YAML as-is. Can be used to list defined containers.
-* [x] Analyzer for `Makefile`: Import the targets + comments, using the regex in `example/Makefile`
+* [x] Analyzer for `Makefile`: Import the targets + comments, using the regex in `examples/full-project/Makefile`
 * [x] Analyzer for `bower.json`: Import the JSON as-is. Can be used to list jobs
 * [x] Analyzer for `.env.dist`: Import variables, their default values, and comments (line before the variable)
 * [x] Analyzer for `.circleci/config.yml`: Import the YAML as-is. Can be used to list jobs

@@ -13,7 +13,7 @@ class DotEnvAnalyzer extends Analyzer
         });
     }
 
-    public function analyzeDotEnv(string $text): array
+    private function analyzeDotEnv(string $text): array
     {
         $vars = array();
 

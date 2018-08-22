@@ -1,19 +1,14 @@
 <?php
 declare(strict_types=1);
 
-use PHPUnit\Framework\TestCase;
 use Stamp\Analyzer\MakefileAnalyzer;
 
 final class MakefileAnalyzerTest extends TestCase
 {
-    private $analyzerResults;
-
     protected function setUp()
     {
-        $analyzer = new MakefileAnalyzer();
-        $makefile = file_get_contents(__DIR__ . '/../../example/Makefile');
-
-        $this->analyzerResults = $analyzer->analyzeMakefile($makefile);
+        parent::setUp();
+        $this->analyzer = new MakefileAnalyzer();
     }
 
     public function testParsingSucceeds(): void
@@ -29,7 +24,7 @@ final class MakefileAnalyzerTest extends TestCase
                 'phpqa-phpcs' => null,
                 'help' => 'This help message'
             ],
-            $this->analyzerResults
+            $this->analyzer->analyze($this->fullProject)['Makefile']
         );
     }
 }

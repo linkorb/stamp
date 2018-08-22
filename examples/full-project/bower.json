@@ -1,0 +1,10 @@
+{
+    "name": "myProject",
+    "version": "1.0.0",
+    "dependencies": {
+        "bootstrap": "~3.3.0",
+        "bootswatch-dist": "3.3.0-lumen",
+        "font-awesome": "~4.3.0",
+        "jquery": ">= 1.9.1"
+    }
+}

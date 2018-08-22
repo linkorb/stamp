@@ -13,7 +13,7 @@ class MakefileAnalyzer extends Analyzer
         });
     }
 
-    public function analyzeMakefile(string $text): array
+    private function analyzeMakefile(string $text): array
     {
         $results = array();
         preg_match_all("/^(?!\s)(.+)\:.*$/m", $text, $results);

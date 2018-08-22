@@ -15,7 +15,9 @@ abstract class Analyzer
     protected function maybeGetContent(Project $project, string $filename, callable $parser = null): ?array {
         $path = $this->getFilepath($project, $filename);
 
-        if (file_exists($path)) {
+        if (is_dir($path)) {
+            return [$filename => true];
+        } else if (file_exists($path)) {
             $content = file_get_contents($path);
             
             if ($parser) {
@@ -23,8 +25,6 @@ abstract class Analyzer
             }
 
             return [$filename => $content];
-        } else if (is_dir($path)) {
-            return [$filename => true];
         } else {
             return null;
         }

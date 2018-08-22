@@ -1,0 +1,10 @@
+columns:
+    user.username:
+        method: faker
+        arguments:
+            formatter: userName
+
+    user.email:
+        method: faker
+        arguments:
+            formatter: email
