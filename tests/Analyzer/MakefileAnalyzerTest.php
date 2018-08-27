@@ -27,4 +27,7 @@ final class MakefileAnalyzerTest extends TestCase
             $this->analyzer->analyze($this->fullProject)['Makefile']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

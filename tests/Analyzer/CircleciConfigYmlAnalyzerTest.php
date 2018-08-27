@@ -18,4 +18,7 @@ final class CircleciConfigYmlAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['.circleci/config.yml']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

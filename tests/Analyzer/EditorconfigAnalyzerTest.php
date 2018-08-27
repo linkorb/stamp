@@ -18,4 +18,7 @@ final class EditorconfigAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['.editorconfig']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

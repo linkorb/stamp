@@ -33,4 +33,7 @@ final class PackageJsonAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['package.json']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

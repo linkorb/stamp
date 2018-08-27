@@ -27,4 +27,7 @@ final class BowerJsonAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['bower.json']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

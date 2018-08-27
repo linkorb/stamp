@@ -34,4 +34,7 @@ final class ComposerJsonAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['composer.json']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

@@ -39,4 +39,7 @@ final class SymfonyRoutesAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['route_collection']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

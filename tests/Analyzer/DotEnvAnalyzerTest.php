@@ -34,4 +34,7 @@ final class DotEnvAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['.env.dist']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

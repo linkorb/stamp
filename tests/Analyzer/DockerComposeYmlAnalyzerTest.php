@@ -18,4 +18,7 @@ final class DockerComposeYmlAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['docker-compose.yml']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

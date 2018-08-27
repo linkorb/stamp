@@ -17,4 +17,7 @@ final class FixturesAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['fixtures']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

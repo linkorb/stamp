@@ -18,4 +18,7 @@ final class AnonymizerYmlAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['anonymizer.yml']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }

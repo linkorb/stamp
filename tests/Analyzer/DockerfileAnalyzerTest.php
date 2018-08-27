@@ -18,4 +18,7 @@ final class DockerfileAnalyzerTest extends \TestCase
             $this->analyzer->analyze($this->fullProject)['Dockerfile']
         );
     }
+
+    // public function testEmptyProject(): void
+    // see Testcase.php
 }
