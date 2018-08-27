@@ -36,7 +36,7 @@ class RadvanceRoutesAnalyzer extends Analyzer
         }, $routeCollection->all());
     }
 
-    private function getAppRoutes(Project $project): ?RouteCollection
+    protected function getAppRoutes(Project $project): ?RouteCollection
     {
         $autoloadPath = $this->getFilepath($project, 'vendor/autoload.php');
 

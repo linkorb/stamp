@@ -3,6 +3,8 @@
 require_once __dir__ . '/../vendor/autoload.php';
 
 use Stamp\Loader\YamlProjectLoader;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
 
 class TestCase extends PHPUnit\Framework\TestCase {
     protected $fullProject;
@@ -19,5 +21,16 @@ class TestCase extends PHPUnit\Framework\TestCase {
         $this->assertNull(
             $this->analyzer->analyze($this->emptyProject)
         );
+    }
+
+    public static function exampleRouteCollection(): RouteCollection
+    {
+                
+        $collection = new RouteCollection();
+        $collection->add('foo', new Route('/foo', ['_controller' => 'FooController']));
+        $collection->add('bar', new Route('/bar', ['_controller' => 'BarController']));
+        $collection->add('foobar', new Route('/foo/bar', ['_controller' => 'BarController']));
+
+        return $collection;
     }
 }

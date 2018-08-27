@@ -13,6 +13,8 @@ class SymfonyRoutesAnalyzer extends Analyzer
     {
         // Things can fail in the command-line
         // Therefore handling this with care.
+        $out = $this->console($project, "debug:router --format=json");
+
         try {
             if ($routes = $this->getAppRoutes($project)) {
                 return ['route_collection' => $this->convertRoutes($routes)];
