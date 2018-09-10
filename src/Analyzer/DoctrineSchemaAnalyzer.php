@@ -2,22 +2,20 @@
 
 namespace Stamp\Analyzer;
 
+use Stamp\Analyzer\Model\Table;
+use Stamp\Analyzer\Model\Column;
+use Stamp\Analyzer\Model\Database;
+
 use Stamp\Model\Project;
 use Symfony\Component\Yaml\Yaml;
-use Alom\Graphviz\Digraph;
 
-class DoctrineSchemaAnalyzer extends Analyzer
+class DoctrineSchemaAnalyzer extends SchemaAnalyzer
 {
     public function analyze(Project $project): ?array
     {
         if (!$this->hasConsole($project)) {
             return null;
         }
-
-        $relativeOutPath = 'doc/schema.svg';
-        $outPath  = $this->getFilepath($project, $relativeOutPath);
-
-        $graph = new DiGraph('A');
 
         $tmpDir = $this->createTmpDir();
 
@@ -35,91 +33,101 @@ class DoctrineSchemaAnalyzer extends Analyzer
             array()
         );
 
-        \Psy\Shell::debug(get_defined_vars());
-
         $this->cleanTmpDir($tmpDir);
 
-        $tables = array();
+        $graph = $this->buildDatabase($entities)->toGraph();
 
-        foreach($entities as $tableId => $table) {
-            $tables[$tableId] = $table['table'];
+        return $this->saveGraph($graph, $project);
+    }
+
+    public function buildDatabase(array $entities) {
+        $database = new Database();
+        $conversion = [];
+
+        foreach($entities as $id => $tableProps) {
+            $conversion[$id] = $tableProps['table'];
         }
 
-        foreach($entities as $tableId => $table) {
-            $html = '';
-            $tableName = $table['table'];
-
-            $columns = array_merge($table['id'], $table['fields']);
-
-            foreach($columns as $name => $column) {
-                $html .= $this->columnHtml($name, $column);
-            }
-
-            if (isset($table['manyToOne'])) {
-                foreach($table['manyToOne'] as $referencesTo => $reference) {
-                    foreach ($reference['joinColumns'] as $referencesFromColumn => $referencesToColumn) {
-                        $html .= $this->relationColumnHtml(
-                            $referencesFromColumn,
-                            "$tableName:$referencesFromColumn -&gt; {$tables[$reference['targetEntity']]}:{$referencesToColumn['referencedColumnName']}"
-                        );
-                    }
-                    $graph->edge([$tableId, $reference['targetEntity']]);
-                }
-            }
-
-            if (isset($table['manyToMany'])) {
-                foreach($table['manyToMany'] as $reference) {
-                    $joinTableName = $reference['joinTable']['name'];
-                    if (!isset($tables[$joinTableName])) {
-                        $tables[$joinTableName] = $joinTableName;
-
-                        $joinColumnsHtml = join('', array_map(
-                            function($column) {
-                                return $this->relationColumnHtml($column['name'], "{$column['name']} -&gt; {$column['referencedColumnName']}");
-                            },
-                            array_merge(
-                                $reference['joinTable']['joinColumns'],
-                                $reference['joinTable']['inverseJoinColumns']
-                            )
-                        ));
-
-                        $graph->node(
-                            $joinTableName,
-                            array(
-                                'shape' => 'none',
-                                '_escaped' => false,
-                                'label' => "<<table><tr><td>$joinTableName</td></tr>$joinColumnsHtml</table>>"
-                            )
-                        );
-                    }
-
-                    $graph->edge([$joinTableName, $reference['targetEntity']]);
-                    $graph->edge([$reference['targetEntity'], $joinTableName]);
-                }
-            }
-
-            $graph->node(
-                $tableId,
-                array(
-                    'shape' => 'none',
-                    '_escaped' => false,
-                    'label' => "<<table><tr><td>$tableName</td></tr>$html</table>>"
-                )
+        foreach($entities as $id => $tableProps) {
+            $table = new Table(
+                $id,
+                $tableProps['table']
             );
+
+            foreach($tableProps['fields'] as $name => $columnProps) {
+                $name = isset($columnProps['column']) ? $columnProps['column'] : $name;
+                $type = isset($columnProps['type'])   ? $columnProps['type'] : '';
+
+                unset($columnProps['type']);
+                unset($columnProps['column']);
+    
+                $table->columns[] = new Column(
+                    $name,
+                    $type,
+                    array_map(
+                        function ($prop, $value) {
+                            if ($value === true)  return "{$prop}: true";
+                            if ($value === false) return "{$prop}: false";
+                            if ($value === null)  return "{$prop}: NULL";
+
+                            return "{$prop}: {$value}";
+                        },
+                        array_keys($columnProps),
+                        $columnProps
+                    )
+                );
+            }
+
+            // manyToOne (just a column)
+            foreach(
+                isset($tableProps['manyToOne']) ? $tableProps['manyToOne'] : [] as $manyToOne
+            ) {
+                $targetId = $manyToOne['targetEntity'];
+                foreach ($manyToOne['joinColumns'] as $columnName => $reference) {
+                    $table->columns[] = new Column(
+                        $columnName,
+                        'reference',
+                        ["references to {$conversion[$targetId]}:{$reference["referencedColumnName"]}"]
+                    );
+                }
+
+                $database->references[] = [$table->identifier, $targetId];
+            }
+
+            // oneToMany: see manyToOne
+
+            // manyToMany (join table)
+            foreach(
+                isset($tableProps['manyToMany']) ? $tableProps['manyToMany'] : [] as $manyToMany
+            ) {
+                $targetId = $manyToMany['targetEntity'];
+                $joinTableProps = $manyToMany['joinTable'];
+
+                if (!$database->tableCreated($joinTableProps['name'])) {
+                    $joinTable = new Table($joinTableProps['name'], $joinTableProps['name']);
+
+                    foreach(array_merge($joinTableProps['joinColumns'], $joinTableProps['inverseJoinColumns']) as $joinColumnProps) {
+                        $joinTable->columns[] = new Column(
+                            $joinColumnProps['name'],
+                            'reference',
+                            ["references to {$joinColumnProps["referencedColumnName"]}"]
+                        );
+                    }
+
+                    $database->tables[] = $joinTable;
+
+                    $database->references[] = [$targetId, $joinTable->identifier];
+                    $database->references[] = [$joinTable->identifier, $targetId];
+
+                    $database->references[] = [$table->identifier, $joinTable->identifier];
+                    $database->references[] = [$joinTable->identifier, $table->identifier];
+                }
+            }
+
+            $database->tables[] = $table;
         }
 
-        $temp = tmpfile();
-        $inPath = stream_get_meta_data($temp)['uri'];
-        fwrite($temp, $graph->render());
-
-        shell_exec("dot -Tsvg -o " . escapeshellarg($outPath) . ' ' . escapeshellarg($inPath));
-
-        fclose($temp);
-
-        return [
-            'schema-dot' => $graph->render(),
-            'schema-svg' => $relativeOutPath
-        ];
+        return $database;
     }
 
     private function createTmpDir(): string {
@@ -135,33 +143,5 @@ class DoctrineSchemaAnalyzer extends Analyzer
         } else {
             mkdir($tmpDir);
         }
-    }
-
-    private function columnHtml(string $name, array $column): string {
-        $type = isset($column['type']) ? $column['type'] : '';
-        $doc = $this->generateDoc($column);
-
-        return "<tr><td>$name</td><td>$type</td><td>$doc</td></tr>";
-    }
-
-    private function generateDoc(array $column): string {
-        return join(', ', array_map(
-            function($key) use ($column) {
-                $val = $column[$key];
-                if ($val === null) {
-                    return "$key: null";
-                } else if ($val === true) {
-                    return "$key: true";
-                } else if ($val === false) {
-                    return "$key: false";
-                } else {
-                    return "$key: $val";
-                }
-            }, ['length', 'unique', 'nullable']
-        ));
-    }
-
-    private function relationColumnHtml($name, $doc) {
-        return "<tr><td>$name</td><td>reference</td><td>$doc</td></tr>";
     }
 }

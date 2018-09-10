@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-cat << EOF
+[ "$1" = "doctrine:mapping:convert" ] && cp -R $(dirname "$0")/.doctrine.mapping.convert.yaml/* "$3"
+
+[ "$1" = "debug:router" ] && cat << EOF
 {
     "admin_index": {
         "path": "/{_locale}/admin/post/",

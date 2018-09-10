@@ -8,25 +8,32 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 use Alom\Graphviz\Digraph;
 
-class RadvanceSchemaAnalyzer extends Analyzer
+use Stamp\Analyzer\Model\Database;
+use Stamp\Analyzer\Model\Table;
+use Stamp\Analyzer\Model\Column;
+
+class RadvanceSchemaAnalyzer extends SchemaAnalyzer
 {
     public function analyze(Project $project): ?array
     {
         $references = $this->getReferences($project);
-        $relativeOutPath = 'doc/schema.svg';
 
         $path = $this->getFilepath($project, 'app/schema.xml');
-        $outPath  = $this->getFilepath($project, $relativeOutPath);
 
         if (!file_exists($path)) {
             return null;
         }
 
         $xml = simplexml_load_file($path);
-        $graph = new DiGraph('A');
 
+        $graph = $this->buildDatabase($xml, $references)->toGraph();
+
+        return $this->saveGraph($graph, $project);
+    }
+
+    public function buildDatabase($xml, $references): Database {
         $tableNames = array();
-        $edges = array();
+        $database = new Database();
 
         foreach ($xml->table as $table) {
             $tableNames[] = (string) $table->attributes()['name'];
@@ -34,58 +41,35 @@ class RadvanceSchemaAnalyzer extends Analyzer
 
         foreach ($xml->table as $table) {
             $tableName = (string) $table->attributes()['name'];
-            $html = "";
-
+            $tableObject = new Table($tableName, $tableName);
+            
             foreach($table->column as $column) {
                 $attributes = $column->attributes();
                 $name = (string) $attributes["name"];
                 $type = (string) $attributes["type"];
-                $doc  = (string) $attributes["doc"];
-
-                $html .= "<tr><td>$name</td><td>$type</td><td>$doc</td></tr>";
+                $docs  = [(string) $attributes["doc"]];
 
                 if (isset($references[$name]) && $tableName !== $references[$name]) {
-                    $graph->edge(
-                        array($tableName, $references[$name])
-                    );
+                    $database->references[] = [$tableName, $references[$name]];
+                    $docs[] = 'references to ' . $references[$name];
                 } else if (substr($name, -3) === '_id') {
                     $referencesTo = substr($name, 0, -3);
-
                     if (in_array($referencesTo, $tableNames)) {
-                        $graph->edge(
-                            array($tableName, $referencesTo)
-                        );
+                        $database->references[] = [$tableName, $referencesTo];
+                        $docs[] = 'references to ' . $referencesTo;
                     } else if (in_array(substr($referencesTo, 0, -1), $tableNames)) {
-                        $graph->edge(
-                            array($tableName, substr($referencesTo, 0, -1))
-                        );
+                        $database->references[] = [$tableName, substr($referencesTo, 0, -1)];
+                        $docs[] = 'references to ' . substr($referencesTo, 0, -1);
                     }
                 }
+
+                $tableObject->columns[] = new Column($name, $type, $docs);
             }
 
-            $graph
-                ->node(
-                    $tableName,
-                    array(
-                        'shape' => 'none',
-                        '_escaped' => false,
-                        'label' => "<<table><tr><td>$tableName</td></tr>$html</table>>"
-                        )
-                    );
+            $database->tables[] = $tableObject;
         }
-
-        $temp = tmpfile();
-        $inPath = stream_get_meta_data($temp)['uri'];
-        fwrite($temp, $graph->render());
-
-        shell_exec("dot -Tsvg -o " . escapeshellarg($outPath) . ' ' . escapeshellarg($inPath));
-
-        fclose($temp);
-
-        return [
-            'schema-dot' => $graph->render(),
-            'schema-svg' => $relativeOutPath
-        ];
+    
+        return $database;
     }
 
     private function getReferences(Project $project): array

@@ -1,0 +1,52 @@
+App\Entity\Comment:
+    type: entity
+    table: symfony_demo_comment
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        content:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        publishedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: published_at
+    manyToOne:
+        post:
+            targetEntity: App\Entity\Post
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: comments
+            joinColumns:
+                post_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        author:
+            targetEntity: App\Entity\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                author_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
