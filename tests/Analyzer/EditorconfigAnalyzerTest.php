@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\EditorconfigAnalyzer;
 
-final class EditorconfigAnalyzerTest extends \TestCase
+final class EditorconfigAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

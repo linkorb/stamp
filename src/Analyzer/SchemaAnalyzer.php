@@ -11,7 +11,7 @@ abstract class SchemaAnalyzer extends Analyzer
         $rendered = $graph->render();
 
         $relativeOutPath = 'doc/schema.svg';
-        $outPath  = $this->getFilepath($project, $relativeOutPath);
+        $outPath  = $project->getFilepath($relativeOutPath);
 
         $temp = tmpfile();
         $inPath = stream_get_meta_data($temp)['uri'];

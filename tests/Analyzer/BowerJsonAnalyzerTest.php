@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\BowerJsonAnalyzer;
 
-final class BowerJsonAnalyzerTest extends \TestCase
+final class BowerJsonAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

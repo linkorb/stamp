@@ -6,7 +6,7 @@ use Stamp\Loader\YamlProjectLoader;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 
-class TestCase extends PHPUnit\Framework\TestCase {
+class AnalyzerTestCase extends PHPUnit\Framework\TestCase {
     protected $fullProject;
     protected $emptyProject;
 

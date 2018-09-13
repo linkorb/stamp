@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\PackageJsonAnalyzer;
 
-final class PackageJsonAnalyzerTest extends \TestCase
+final class PackageJsonAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

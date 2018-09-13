@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\DockerComposeYmlAnalyzer;
 
-final class DockerComposeYmlAnalyzerTest extends \TestCase
+final class DockerComposeYmlAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

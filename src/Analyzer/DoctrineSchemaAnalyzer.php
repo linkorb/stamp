@@ -13,13 +13,13 @@ class DoctrineSchemaAnalyzer extends SchemaAnalyzer
 {
     public function analyze(Project $project): ?array
     {
-        if (!$this->hasConsole($project)) {
+        if (!$project->hasConsole()) {
             return null;
         }
 
         $tmpDir = $this->createTmpDir();
 
-        $this->console($project, 'doctrine:mapping:convert yaml ' . escapeshellarg($tmpDir));
+        $project->console('doctrine:mapping:convert yaml ' . escapeshellarg($tmpDir));
 
         $entities = array_reduce(
             glob("$tmpDir/*.yml"),

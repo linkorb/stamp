@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\FixturesAnalyzer;
 
-final class FixturesAnalyzerTest extends \TestCase
+final class FixturesAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

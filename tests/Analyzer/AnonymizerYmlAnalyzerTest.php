@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\AnonymizerYmlAnalyzer;
 
-final class AnonymizerYmlAnalyzerTest extends \TestCase
+final class AnonymizerYmlAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

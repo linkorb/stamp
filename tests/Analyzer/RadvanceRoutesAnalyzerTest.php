@@ -9,11 +9,11 @@ class RadvanceRoutesAnalayzer extends OriginalAnalyzer
 {
     protected function getAppRoutes(Project $project): ?RouteCollection
     {
-        return \TestCase::exampleRouteCollection();
+        return \AnalyzerTestCase::exampleRouteCollection();
     }
 }
 
-final class RadvanceRoutesAnalyzerTest extends \TestCase
+final class RadvanceRoutesAnalyzerTest extends \AnalyzerTestCase
 {
     public function testParsingSucceeds(): void
     {

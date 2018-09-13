@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\DotEnvAnalyzer;
 
-final class DotEnvAnalyzerTest extends \TestCase
+final class DotEnvAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

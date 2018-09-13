@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\CircleciConfigYmlAnalyzer;
 
-final class CircleciConfigYmlAnalyzerTest extends \TestCase
+final class CircleciConfigYmlAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

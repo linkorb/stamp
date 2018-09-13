@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\ComposerJsonAnalyzer;
 
-final class ComposerJsonAnalyzerTest extends \TestCase
+final class ComposerJsonAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

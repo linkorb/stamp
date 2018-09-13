@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\MakefileAnalyzer;
 
-final class MakefileAnalyzerTest extends TestCase
+final class MakefileAnalyzerTest extends AnalyzerTestCase
 {
     protected function setUp()
     {

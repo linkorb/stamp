@@ -11,7 +11,7 @@ class Project
     protected $basePath;
 
     protected $analyzerClasses = [
-        Analyzer\AnonymizerYmlAnalyzer::class,
+        /*Analyzer\AnonymizerYmlAnalyzer::class,
         Analyzer\BowerJsonAnalyzer::class,
         Analyzer\CircleciConfigYmlAnalyzer::class,
         Analyzer\ComposerJsonAnalyzer::class,
@@ -20,12 +20,13 @@ class Project
         Analyzer\DoctrineSchemaAnalyzer::class,
         Analyzer\DotEnvAnalyzer::class,
         Analyzer\EditorconfigAnalyzer::class,
-        Analyzer\FixturesAnalyzer::class,
-        Analyzer\MakefileAnalyzer::class,
+        Analyzer\FixturesAnalyzer::class,*/
+        Analyzer\GithubAnalyzer::class,
+        /*Analyzer\MakefileAnalyzer::class,
         Analyzer\PackageJsonAnalyzer::class,
         Analyzer\RadvanceRoutesAnalyzer::class,
         Analyzer\RadvanceSchemaAnalyzer::class,
-        Analyzer\SymfonyRoutesAnalyzer::class,
+        Analyzer\SymfonyRoutesAnalyzer::class,*/
     ];
 
     public function __construct($basePath, $variables = [])
@@ -72,5 +73,38 @@ class Project
             }
         }
         return $data;
+    }
+
+    public function getFilepath(string $filename): string {
+        return $this->getBasePath() . '/' . $filename;
+    }
+
+    public function hasConsole(): bool
+    {
+        return file_exists(
+            $this->getFilepath('bin/console')
+        );
+    }
+
+    public function console(string $cmd): ?string {
+        $console = $this->getFilepath('bin/console');
+
+        if (!$this->hasConsole()) {
+            return null;
+        }
+
+        return shell_exec("$console $cmd");
+    }
+
+    public function git(string $cmd): ?string {
+        $gitDir = $this->getFilePath('.git');
+
+        if (!is_dir($gitDir)) {
+            return null;
+        }
+
+        $dir = escapeshellarg($gitDir);
+
+        return shell_exec("git --git-dir $dir $cmd");
     }
 }

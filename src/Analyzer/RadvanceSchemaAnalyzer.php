@@ -18,7 +18,7 @@ class RadvanceSchemaAnalyzer extends SchemaAnalyzer
     {
         $references = $this->getReferences($project);
 
-        $path = $this->getFilepath($project, 'app/schema.xml');
+        $path = $project->getFilepath('app/schema.xml');
 
         if (!file_exists($path)) {
             return null;

@@ -38,7 +38,7 @@ class RadvanceRoutesAnalyzer extends Analyzer
 
     protected function getAppRoutes(Project $project): ?RouteCollection
     {
-        $autoloadPath = $this->getFilepath($project, 'vendor/autoload.php');
+        $autoloadPath = $project->getFilepath('vendor/autoload.php');
 
         if (!file_exists($autoloadPath)) {
             return null;
@@ -46,13 +46,13 @@ class RadvanceRoutesAnalyzer extends Analyzer
 
         require_once($autoloadPath);
 
-        $envPath = $this->getFilepath($project, '.env');
+        $envPath = $project->getFilepath('.env');
         if (file_exists($envPath)) {
             $dotenv = new DotEnv();
             $dotenv->load($envPath);
         }
 
-        $appPath = $this->getFilepath($project, 'app/bootstrap.php');
+        $appPath = $project->getFilepath('app/bootstrap.php');
 
         if (file_exists($appPath)) {
             return (require($appPath))['routes'];

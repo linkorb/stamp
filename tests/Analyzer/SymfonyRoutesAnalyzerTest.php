@@ -5,7 +5,7 @@ use Stamp\Model\Project;
 use Stamp\Analyzer\SymfonyRoutesAnalyzer;
 use Symfony\Component\Routing\RouteCollection;
 
-final class SymfonyRoutesAnalyzerTest extends \TestCase
+final class SymfonyRoutesAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {

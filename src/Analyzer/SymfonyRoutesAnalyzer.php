@@ -13,7 +13,7 @@ class SymfonyRoutesAnalyzer extends Analyzer
     {
         // Things can fail in the command-line
         // Therefore handling this with care.
-        $out = $this->console($project, "debug:router --format=json");
+        $out = $project->console("debug:router --format=json");
 
         try {
             if ($routes = $this->getAppRoutes($project)) {
@@ -40,7 +40,7 @@ class SymfonyRoutesAnalyzer extends Analyzer
 
     private function getAppRoutes(Project $project): ?array
     {
-        $out = $this->console($project, "debug:router --format=json");
+        $out = $project->console("debug:router --format=json");
 
         if ($out) {
             return json_decode($out, true);

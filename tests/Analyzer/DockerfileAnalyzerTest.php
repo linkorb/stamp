@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Stamp\Analyzer\DockerfileAnalyzer;
 
-final class DockerfileAnalyzerTest extends \TestCase
+final class DockerfileAnalyzerTest extends \AnalyzerTestCase
 {
     protected function setUp()
     {
