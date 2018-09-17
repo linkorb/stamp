@@ -32,7 +32,7 @@ Fetch any requirements using the following command:
 {% if analyzer['package.json']['scripts'] is defined %}
 ## NPM Scripts
 
-The following NPM scripts have beenb made available:
+The following NPM scripts have been made available:
 
 {% for name,command in analyzer['package.json']['scripts']  %}
 * **{{ name }}**: `{{ command }}`

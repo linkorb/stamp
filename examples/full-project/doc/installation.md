@@ -1,6 +1,6 @@
 #### Installation details go here
 
-asdkjhakj akjaksd
+Lorem ipsum dolor sit amet:
 
     ./bin/install --yes
 

@@ -11,7 +11,7 @@ class Project
     protected $basePath;
 
     protected $analyzerClasses = [
-        /*Analyzer\AnonymizerYmlAnalyzer::class,
+        Analyzer\AnonymizerYmlAnalyzer::class,
         Analyzer\BowerJsonAnalyzer::class,
         Analyzer\CircleciConfigYmlAnalyzer::class,
         Analyzer\ComposerJsonAnalyzer::class,
@@ -20,13 +20,13 @@ class Project
         Analyzer\DoctrineSchemaAnalyzer::class,
         Analyzer\DotEnvAnalyzer::class,
         Analyzer\EditorconfigAnalyzer::class,
-        Analyzer\FixturesAnalyzer::class,*/
+        Analyzer\FixturesAnalyzer::class,
         Analyzer\GithubAnalyzer::class,
-        /*Analyzer\MakefileAnalyzer::class,
+        Analyzer\MakefileAnalyzer::class,
         Analyzer\PackageJsonAnalyzer::class,
         Analyzer\RadvanceRoutesAnalyzer::class,
         Analyzer\RadvanceSchemaAnalyzer::class,
-        Analyzer\SymfonyRoutesAnalyzer::class,*/
+        Analyzer\SymfonyRoutesAnalyzer::class,
     ];
 
     public function __construct($basePath, $variables = [])
