@@ -75,6 +75,5 @@ You can use the following command to debug the data that will be injected into a
 * [x] Analyzer for `anonymizer.yml`: Simply define a variable if it exists.
 * [x] Analyzer for `github`: Request repository data like contributors, title, etc.
 * [ ] Allow to use project variables in template filenames/urls (i.e. to fetch the proper license file)
-* [ ] Allow to use either twig or handlebars templates (using `zordius/lightncandy`)
+* [x] Allow to use either twig or handlebars templates (using `zordius/lightncandy`)
 * [ ] Pass on the `output` variable from the Commands for debugging output in the Generator and Analyzers
-

@@ -49,12 +49,18 @@ class Generator
             $twig = new \Twig_Environment(new \Twig_Loader_String());
             return $twig->render($templateString, $data);
         } else if ($file->hasTemplateExtension('handlebars')) {
-            $t = LightnCandy::compile($templateString, ['flags' => LightnCandy::FLAG_HANDLEBARSJS]);
+            $renderWith = LightnCandy::FLAG_HANDLEBARSJS;
+        } else if ($file->hasTemplateExtension('mustache')) {
+            $renderWith = LightnCandy::FLAG_MUSTACHE;
+        } else {
+            return $templateString;
+        }
+
+        if (isset($renderWith)) {
+            $t = LightnCandy::compile($templateString, ['flags' => $renderWith]);
             $renderer = LightnCandy::prepare($t);
 
             return $renderer($data, []);
-        } else {
-            return $templateString;
         }
     }
 
