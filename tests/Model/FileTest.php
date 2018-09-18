@@ -8,12 +8,12 @@ final class FileTest extends TestCase
 {
     public function testCreateFileAndExpectExtensions(): void
     {
-        $file = new File('example/file/path.html.twig', null, []);
+        $file = new File('path.php', 'example/file/path.html.twig', []);
 
-        $this->assertEquals(['html', 'twig'], $file->getExtensions());
+        $this->assertEquals(['html', 'twig'], $file->getTemplateExtensions());
 
-        $this->assertTrue($file->hasExtension('html'));
-        $this->assertTrue($file->hasExtension('twig'));
-        $this->assertFalse($file->hasExtension('php'));
+        $this->assertTrue($file->hasTemplateExtension('html'));
+        $this->assertTrue($file->hasTemplateExtension('twig'));
+        $this->assertFalse($file->hasTemplateExtension('php'));
     }
 }

@@ -1,34 +1,5 @@
 # {{ project.title }}
 
-
-## Installation
-
-{% if analyzer['package.json'] is defined %}
-### NPM
-
-This project uses [NPM](https://npmjs.org/) to manage it's Node dependencies.
-
-Learn more about NPM [here](https://docs.npmjs.com/getting-started/what-is-npm).
-
-Fetch any requirements using the following command:
-
-    $ npm install
-
-{% endif %}
-
-{% if analyzer['composer.json'] is defined %}
-### Composer
-
-This project uses [composer](https://getcomposer.org/doc/00-intro.md) to manage it's PHP dependencies.
-
-Learn more about Composer [here](https://getcomposer.org/doc/00-intro.md)
-
-Fetch any requirements using the following command:
-
-    $ composer install
-
-{% endif %}
-
 {% if analyzer['package.json']['scripts'] is defined %}
 ## NPM Scripts
 
@@ -40,6 +11,9 @@ The following NPM scripts have been made available:
 
 {% endif %}
 
+## Installation
+
+See [Installation Guide](INSTALL.md)
 
 ## Documentation
 

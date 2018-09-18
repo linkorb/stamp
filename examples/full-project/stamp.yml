@@ -17,6 +17,8 @@ files:
         - "@doc/installation.md"
         # - "## Makefile\n"
         # - "@https://raw.githubusercontent.com/rodrigorm/phpqa-make/master/Makefile"
+  INSTALL.md:
+    template: INSTALL.md.handlebars
 
   # LICENSE.md:
   #   template: https://raw.githubusercontent.com/linkorb/stamp-templates/master/license/{{project.license}}.md

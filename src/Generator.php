@@ -5,6 +5,8 @@ namespace Stamp;
 use Stamp\Model\Project;
 use Stamp\Model\File;
 
+use LightnCandy\LightnCandy;
+
 class Generator
 {
     public function __construct(Project $project)
@@ -29,20 +31,31 @@ class Generator
 
     public function generateFile(File $file)
     {
+        file_put_contents(
+            $this->project->getBasePath() . '/' . $file->getName(),
+            $this->renderFile($file)
+        );
+    }
+
+    public function renderFile(File $file): string
+    {
         $templateString = $this->loadString($file->getTemplate());
 
-        $twig = new \Twig_Environment(new \Twig_Loader_String());
         $data = array_replace_recursive($this->project->getVariables(), $file->getVariables());
-
         array_walk_recursive($data, [$this, 'process']);
-        $data = array_merge_recursive(
-            $data,
-            ['analyzer' => $this->project->analyze()]
-        );
-        $rendered = $twig->render($templateString, $data);
+        $data = array_merge_recursive($data, ['analyzer' => $this->project->analyze()]);
 
-        file_put_contents($this->project->getBasePath() . '/' . $file->getName(), $rendered);
-        //echo $rendered;
+        if ($file->hasTemplateExtension('twig')) {
+            $twig = new \Twig_Environment(new \Twig_Loader_String());
+            return $twig->render($templateString, $data);
+        } else if ($file->hasTemplateExtension('handlebars')) {
+            $t = LightnCandy::compile($templateString, ['flags' => LightnCandy::FLAG_HANDLEBARSJS]);
+            $renderer = LightnCandy::prepare($t);
+
+            return $renderer($data, []);
+        } else {
+            return $templateString;
+        }
     }
 
     public function loadString($template)
