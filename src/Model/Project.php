@@ -8,6 +8,7 @@ class Project
 {
     protected $files = [];
     protected $variables = [];
+    protected $config = [];
     protected $basePath;
 
     protected $analyzerClasses = [
@@ -29,15 +30,23 @@ class Project
         Analyzer\SymfonyRoutesAnalyzer::class,
     ];
 
-    public function __construct($basePath, $variables = [])
+    public function __construct($basePath, $config = [])
     {
         $this->basePath = $basePath;
-        $this->variables = $variables;
+        $this->config = $config;
     }
 
-    public function getVariables()
+    public function getVariables(): array
     {
-        return $this->variables;
+        if (isset($this->config['variables'])) {
+            return $this->config['variables'];
+        } else {
+            return [];
+        }
+    }
+
+    public function getConfig(): array {
+        return $this->config;
     }
 
     public function getBasePath()

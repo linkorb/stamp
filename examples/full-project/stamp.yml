@@ -1,7 +1,7 @@
 variables:
   project:
     title: Hello world
-    license: mit
+    license: "{{ analyzer['composer.json']['license'] }}"
   radvance:
     schema:
       references:
@@ -13,15 +13,14 @@ files:
     variables: # Variable overrides specific to this file only
       title: Hello world
       blocks: # Include custom documentation blocks with local or remote content
-        - "@doc/intro.md"
-        - "@doc/installation.md"
-        # - "## Makefile\n"
-        # - "@https://raw.githubusercontent.com/rodrigorm/phpqa-make/master/Makefile"
+        - "doc/intro.md"
+        - "doc/installation.md"
+        - "https://raw.githubusercontent.com/rodrigorm/phpqa-make/master/Makefile"
   INSTALL.md:
     template: INSTALL.md.handlebars
 
-  # LICENSE.md:
-  #   template: https://raw.githubusercontent.com/linkorb/stamp-templates/master/license/{{project.license}}.md
+  LICENSE.md:
+    template: "https://raw.githubusercontent.com/linkorb/stamp-templates/master/license/{{ analyzer['composer.json']['license'] | lower }}.md"
   
   # CONTRIBUTING.md:
   #   template: https://example.com/stamps/CONTRIBUTING.md.twig

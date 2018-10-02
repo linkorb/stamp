@@ -7,11 +7,17 @@ use Stamp\Model\File;
 
 use LightnCandy\LightnCandy;
 
+use Twig_Environment;
+use Twig_Loader_String;
+
 class Generator
 {
+    private $twig;
+
     public function __construct(Project $project)
     {
         $this->project = $project;
+        $this->twig = new Twig_Environment(new Twig_Loader_String());
     }
 
     public function generate()
@@ -39,15 +45,28 @@ class Generator
 
     public function renderFile(File $file): string
     {
-        $templateString = $this->loadString($file->getTemplate());
+        $analyzed = ['analyzer' => $this->project->analyze()];
+        $config = $this->interpolate($this->project->getConfig(), $analyzed);
+        $fileConfig = $this->interpolate($file->getVariables(), $analyzed);
+        $blocks = isset($fileConfig['blocks']) ? array_map(
+            function($block) {
+                return $this->loadString($block);
+            }, $fileConfig['blocks']
+        ) : [];
+        
+        $data = array_merge_recursive(
+            $analyzed,
+            $config,
+            $fileConfig,
+            ['blocks' => $blocks]
+        );
 
-        $data = array_replace_recursive($this->project->getVariables(), $file->getVariables());
-        array_walk_recursive($data, [$this, 'process']);
-        $data = array_merge_recursive($data, ['analyzer' => $this->project->analyze()]);
+        $templateStringTemplate = $this->twig->createTemplate($file->getTemplate());
+        $templateString = $this->loadString($templateStringTemplate->render($data));
 
         if ($file->hasTemplateExtension('twig')) {
-            $twig = new \Twig_Environment(new \Twig_Loader_String());
-            return $twig->render($templateString, $data);
+            $template = $this->twig->createTemplate($templateString);
+            return $template->render($data);
         } else if ($file->hasTemplateExtension('handlebars')) {
             $renderWith = LightnCandy::FLAG_HANDLEBARSJS;
         } else if ($file->hasTemplateExtension('mustache')) {
@@ -62,6 +81,18 @@ class Generator
 
             return $renderer($data, []);
         }
+    }
+
+    public function interpolate(array $config, array $analyzerResults): array {
+        $data = array_merge_recursive($config, $analyzerResults);
+        $twig = new \Twig_Environment(new \Twig_Loader_String());
+
+        array_walk_recursive($config, function(&$value, $key) use ($data, $twig) {
+            $template = $twig->createTemplate($value);
+            $value = $template->render($data);
+        });
+
+        return $config;
     }
 
     public function loadString($template)

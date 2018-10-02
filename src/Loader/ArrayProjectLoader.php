@@ -9,11 +9,7 @@ class ArrayProjectLoader
 {   
     public function load($data, $basePath)
     {
-        $variables = [];
-        if (isset($data['variables'])) {
-            $variables = $data['variables'];
-        }
-        $project = new Project($basePath, $variables);
+        $project = new Project($basePath, $data);
         
         foreach ($data['files'] ?? [] as $name => $fileData) {
             $template = $fileData['template'] ?? null;
