@@ -4,16 +4,12 @@ namespace Stamp\Analyzer;
 
 use Stamp\Model\Project;
 
-class PackageJsonAnalyzer implements AnalyzerInterface
+class PackageJsonAnalyzer extends Analyzer
 {
-    public function analyze(Project $project)
+    public function analyze(Project $project): ?array
     {
-        $filename = $project->getBasePath() . '/package.json';
-        if (!file_exists($filename)) {
-            return null;
-        }
-        $content = file_get_contents($filename);
-        $data = json_decode($content, true);
-        return ['package.json' => $data];
+        return $this->maybeGetContent($project, 'package.json', function($data) {
+            return json_decode($data, true);
+        });
     }
 }

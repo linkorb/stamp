@@ -3,7 +3,6 @@
   "description": "Acme Example project",
   "homepage": "https://github.com/acme/example",
   "keywords": ["example", "acme"],
-  "type": "library",
   "authors": [
     {
       "name": "Joe Johnson",
@@ -12,14 +11,7 @@
     }
   ],
   "require": {
-    "symfony/console": "^4.0",
-    "symfony/yaml": "^4.0",
-    "twig/twig": "^1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Acme\\Example\\": "src/"
-    }
+    "symfony/console": "^4.0"
   },
   "license": "MIT"
 }

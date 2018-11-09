@@ -1,0 +1,99 @@
+App\Entity\Post:
+    type: entity
+    table: symfony_demo_post
+    repositoryClass: App\Repository\PostRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        slug:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        summary:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        content:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        publishedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: published_at
+    manyToOne:
+        author:
+            targetEntity: App\Entity\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                author_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        comments:
+            targetEntity: App\Entity\Comment
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: post
+            inversedBy: null
+            orphanRemoval: true
+            orderBy:
+                publishedAt: DESC
+    manyToMany:
+        tags:
+            targetEntity: App\Entity\Tag
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinTable:
+                name: symfony_demo_post_tag
+                schema: null
+                joinColumns:
+                    -
+                        name: post_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: tag_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy:
+                name: ASC
+    lifecycleCallbacks: {  }

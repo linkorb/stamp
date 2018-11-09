@@ -20,6 +20,17 @@ class File
         return $this->name;
     }
 
+    public function getTemplateExtensions(): array
+    {
+        $extensions = explode('.', $this->getTemplate());
+        return array_splice($extensions, 1);
+    }
+
+    public function hasTemplateExtension(string $ext): bool
+    {
+        return array_search($ext, $this->getTemplateExtensions()) !== false;
+    }
+
     public function getTemplate()
     {
         return $this->template;

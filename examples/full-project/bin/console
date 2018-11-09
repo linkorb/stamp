@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+[ "$1" = "doctrine:mapping:convert" ] && cp -R $(dirname "$0")/.doctrine.mapping.convert.yaml/* "$3"
+
+[ "$1" = "debug:router" ] && cat << EOF
+{
+    "admin_index": {
+        "path": "/{_locale}/admin/post/",
+        "pathRegex": "#^/(?P<_locale>en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN|bg)/admin/post/$#sD",
+        "host": "ANY",
+        "hostRegex": "",
+        "scheme": "ANY",
+        "method": "GET",
+        "class": "Symfony\\\\Component\\\\Routing\\\\Route",
+        "defaults": {
+            "_controller": "App\\\\Controller\\\\Admin\\\\BlogController::index",
+            "_locale": "en"
+        },
+        "requirements": {
+            "_locale": "en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN|bg"
+        },
+        "options": {
+            "compiler_class": "Symfony\\\\Component\\\\Routing\\\\RouteCompiler"
+        }
+    },
+    "admin_post_index": {
+        "path": "/{_locale}/admin/post/",
+        "pathRegex": "#^/(?P<_locale>en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN|bg)/admin/post/$#sD",
+        "host": "ANY",
+        "hostRegex": "",
+        "scheme": "ANY",
+        "method": "GET",
+        "class": "Symfony\\\\Component\\\\Routing\\\\Route",
+        "defaults": {
+            "_controller": "App\\\\Controller\\\\Admin\\\\BlogController::index",
+            "_locale": "en"
+        },
+        "requirements": {
+            "_locale": "en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN|bg"
+        },
+        "options": {
+            "compiler_class": "Symfony\\\\Component\\\\Routing\\\\RouteCompiler"
+        }
+    },
+    "admin_post_new": {
+        "path": "/{_locale}/admin/post/new",
+        "pathRegex": "#^/(?P<_locale>en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN|bg)/admin/post/new$#sD",
+        "host": "ANY",
+        "hostRegex": "",
+        "scheme": "ANY",
+        "method": "GET|POST",
+        "class": "Symfony\\\\Component\\\\Routing\\\\Route",
+        "defaults": {
+            "_controller": "App\\\\Controller\\\\Admin\\\\BlogController::new",
+            "_locale": "en"
+        },
+        "requirements": {
+            "_locale": "en|fr|de|es|cs|nl|ru|uk|ro|pt_BR|pl|it|ja|id|ca|sl|hr|zh_CN|bg"
+        },
+        "options": {
+            "compiler_class": "Symfony\\\\Component\\\\Routing\\\\RouteCompiler"
+        }
+    }
+}
+EOF

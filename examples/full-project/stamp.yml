@@ -1,0 +1,28 @@
+variables:
+  project:
+    title: Hello world
+    license: "{{ analyzer['composer.json']['license'] }}"
+  radvance:
+    schema:
+      references:
+        username: user_data
+
+files:
+  README.md:
+    template: README.md.twig # In practice a remote URL would be used here
+    variables: # Variable overrides specific to this file only
+      title: Hello world
+      blocks: # Include custom documentation blocks with local or remote content
+        - "doc/intro.md"
+        - "doc/installation.md"
+        - "https://raw.githubusercontent.com/rodrigorm/phpqa-make/master/Makefile"
+  INSTALL.md:
+    template: INSTALL.md.handlebars
+
+  LICENSE.md:
+    template: "https://raw.githubusercontent.com/linkorb/stamp-templates/master/license/{{ analyzer['composer.json']['license'] | lower }}.md"
+  
+  # CONTRIBUTING.md:
+  #   template: https://example.com/stamps/CONTRIBUTING.md.twig
+  # Dockerfile:
+  #   template: https://example.com/stamps/Dockerfile.twig
