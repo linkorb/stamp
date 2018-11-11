@@ -2,7 +2,7 @@
 
 namespace Stamp\Command;
 
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
@@ -21,11 +21,10 @@ class GithubTokenCommand extends Command
         $this
             ->setName('github-token')
             ->setDescription('Set personal access token for the command line')
-            ->addOption(
+            ->addArgument(
                 'token',
-                't',
-                InputOption::VALUE_REQUIRED,
-                null
+                InputArgument::REQUIRED,
+                'Token retrieved from https://github.com/settings/tokens (with `repo` scope selected)'
             )
         ;
     }
@@ -37,7 +36,7 @@ class GithubTokenCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $token = $input->getOption('token');
+        $token = $input->getArgument('token');
 
         if ($e = $this->testToken($token)) {
             $io->getErrorStyle()->error($e->getMessage());
