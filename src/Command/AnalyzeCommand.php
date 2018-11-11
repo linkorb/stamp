@@ -28,7 +28,7 @@ class AnalyzeCommand extends Command
                 'config',
                 'c',
                 InputOption::VALUE_REQUIRED,
-                null
+                'Configuration file to use'
             )
         ;
     }
