@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Symfony\Component\Yaml\Yaml;
 use Stamp\Analyzer\CircleciConfigYmlAnalyzer;
 
 final class CircleciConfigYmlAnalyzerTest extends \AnalyzerTestCase
@@ -14,7 +15,7 @@ final class CircleciConfigYmlAnalyzerTest extends \AnalyzerTestCase
     public function testParsingSucceeds(): void
     {
         $this->assertEquals(
-            file_get_contents($this->fullProject->getBasePath() . '/.circleci/config.yml'),
+            Yaml::parse(file_get_contents($this->fullProject->getBasePath() . '/.circleci/config.yml')),
             $this->analyzer->analyze($this->fullProject)['.circleci/config.yml']
         );
     }

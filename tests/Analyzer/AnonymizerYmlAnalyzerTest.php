@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Symfony\Component\Yaml\Yaml;
 use Stamp\Analyzer\AnonymizerYmlAnalyzer;
 
 final class AnonymizerYmlAnalyzerTest extends \AnalyzerTestCase
@@ -14,7 +15,7 @@ final class AnonymizerYmlAnalyzerTest extends \AnalyzerTestCase
     public function testParsingSucceeds(): void
     {
         $this->assertEquals(
-            file_get_contents($this->fullProject->getBasePath() . '/anonymizer.yml'),
+            Yaml::parse(file_get_contents($this->fullProject->getBasePath() . '/anonymizer.yml')),
             $this->analyzer->analyze($this->fullProject)['anonymizer.yml']
         );
     }

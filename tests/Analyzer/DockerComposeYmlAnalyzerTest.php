@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Symfony\Component\Yaml\Yaml;
 use Stamp\Analyzer\DockerComposeYmlAnalyzer;
 
 final class DockerComposeYmlAnalyzerTest extends \AnalyzerTestCase
@@ -14,7 +15,7 @@ final class DockerComposeYmlAnalyzerTest extends \AnalyzerTestCase
     public function testParsingSucceeds(): void
     {
         $this->assertEquals(
-            file_get_contents($this->fullProject->getBasePath() . '/docker-compose.yml'),
+            Yaml::parse(file_get_contents($this->fullProject->getBasePath() . '/docker-compose.yml')),
             $this->analyzer->analyze($this->fullProject)['docker-compose.yml']
         );
     }
