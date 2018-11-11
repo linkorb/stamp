@@ -2,6 +2,14 @@
 
 Stamp helps you to generate common repository files like `README.md`, `LICENSE`, `.gitignore`, `Dockerfile` etc.
 
+## Installation
+
+    composer require linkorb/stamp --dev
+
+## Usage
+
+    vendor/bin/stamp --help
+
 ## Workflow:
 
 ### 1. Load `stamp.yml` configuration:
