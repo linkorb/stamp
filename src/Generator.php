@@ -69,6 +69,8 @@ class Generator
             return $template->render($data);
         } else if ($file->hasTemplateExtension('handlebars')) {
             $renderWith = LightnCandy::FLAG_HANDLEBARSJS;
+        } else if ($file->hasTemplateExtension('hbs')) {
+            $renderWith = LightnCandy::FLAG_HANDLEBARSJS;
         } else if ($file->hasTemplateExtension('mustache')) {
             $renderWith = LightnCandy::FLAG_MUSTACHE;
         } else {
