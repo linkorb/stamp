@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a10892723958b1c93b0fc2b2577be7c",
+    "content-hash": "8bc25b906438cba8872f43d8b39bec74",
     "packages": [
         {
             "name": "alom/graphviz",

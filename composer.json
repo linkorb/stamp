@@ -13,10 +13,10 @@
   ],
   "require": {
     "symfony/console": "^3.0|^4.0",
-    "symfony/yaml": "^4.1",
+    "symfony/yaml": "^3.0|^4.0",
     "twig/twig": "^1.0",
-    "symfony/dotenv": "^4.1",
-    "symfony/routing": "^4.1",
+    "symfony/dotenv": "^3.0|^4.0",
+    "symfony/routing": "^3.0|^4.0",
     "alom/graphviz": "^1.1",
     "knplabs/github-api": "^2.10",
     "php-http/guzzle6-adapter": "^1.1",
