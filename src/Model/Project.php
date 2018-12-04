@@ -2,33 +2,12 @@
 
 namespace Stamp\Model;
 
-use Stamp\Analyzer;
-
 class Project
 {
     protected $files = [];
-    protected $variables = [];
     protected $config = [];
+    protected $analyzedData = [];
     protected $basePath;
-
-    protected $analyzerClasses = [
-        Analyzer\AnonymizerYmlAnalyzer::class,
-        Analyzer\BowerJsonAnalyzer::class,
-        Analyzer\CircleciConfigYmlAnalyzer::class,
-        Analyzer\ComposerJsonAnalyzer::class,
-        Analyzer\DockerComposeYmlAnalyzer::class,
-        Analyzer\DockerfileAnalyzer::class,
-        Analyzer\DoctrineSchemaAnalyzer::class,
-        Analyzer\DotEnvAnalyzer::class,
-        Analyzer\EditorconfigAnalyzer::class,
-        Analyzer\FixturesAnalyzer::class,
-        Analyzer\GithubAnalyzer::class,
-        Analyzer\MakefileAnalyzer::class,
-        Analyzer\PackageJsonAnalyzer::class,
-        Analyzer\RadvanceRoutesAnalyzer::class,
-        Analyzer\RadvanceSchemaAnalyzer::class,
-        Analyzer\SymfonyRoutesAnalyzer::class,
-    ];
 
     public function __construct($basePath, $config = [])
     {
@@ -38,11 +17,7 @@ class Project
 
     public function getVariables(): array
     {
-        if (isset($this->config['variables'])) {
-            return $this->config['variables'];
-        } else {
-            return [];
-        }
+        return $this->config['variables'] ?? [];
     }
 
     public function getConfig(): array {
@@ -63,25 +38,20 @@ class Project
         return $this->files;
     }
 
-    public function getData()
+    /**
+     * @param array $analyzedData
+     */
+    public function setAnalyzedData(array $analyzedData): void
     {
-        return array_merge_recursive(
-            $this->variables,
-            ['analyzer' => $this->analyze()]
-        );
+        $this->analyzedData = $analyzedData;
     }
 
-    public function analyze()
+    /**
+     * @return array
+     */
+    public function getAnalyzedData(): array
     {
-        $data = [];
-        foreach ($this->analyzerClasses as $analyzerClass) {
-            $analyzer = new $analyzerClass();
-            $res = $analyzer->analyze($this);
-            if ($res) {
-                $data = array_merge_recursive($data, $res);
-            }
-        }
-        return $data;
+        return $this->analyzedData;
     }
 
     public function getFilepath(string $filename): string {
@@ -103,17 +73,5 @@ class Project
         }
 
         return shell_exec("$console $cmd");
-    }
-
-    public function git(string $cmd): ?string {
-        $gitDir = $this->getFilePath('.git');
-
-        if (!is_dir($gitDir)) {
-            return null;
-        }
-
-        $dir = escapeshellarg($gitDir);
-
-        return shell_exec("git --git-dir $dir $cmd");
     }
 }
