@@ -78,7 +78,26 @@ class Generator
         }
 
         if (isset($renderWith)) {
-            $t = LightnCandy::compile($templateString, ['flags' => $renderWith]);
+            $t = LightnCandy::compile(
+                $templateString,
+                [
+                    'flags' => $renderWith,
+                    'helpers' => [
+                        'eq' => function () {
+                            // Get arguments
+                            $args = func_get_args();
+                            $context = $args[count($args) - 1];
+                            if ((string) $args[0] === (string) $args[1] ) {
+                                // Arguments match, render it
+                                return $context['fn']();
+                            } else {
+                                // If an {{else}} exists, render that instead; otherwise, render nothing
+                                return $context['inverse'] ? $context['inverse']() : '';
+                            }
+                        }
+                    ]
+                ]
+            );
             $renderer = LightnCandy::prepare($t);
 
             return $renderer($data, []);
