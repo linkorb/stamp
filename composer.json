@@ -17,9 +17,6 @@
     "twig/twig": "^1.0",
     "symfony/dotenv": "^3.0|^4.0",
     "symfony/routing": "^3.0|^4.0",
-    "alom/graphviz": "^1.1",
-    "knplabs/github-api": "^2.10",
-    "php-http/guzzle6-adapter": "^1.1",
     "zordius/lightncandy": "^0.0|^1.0"
   },
   "autoload": {

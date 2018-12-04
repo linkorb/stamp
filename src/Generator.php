@@ -45,7 +45,7 @@ class Generator
 
     public function renderFile(File $file): string
     {
-        $analyzed = ['analyzer' => $this->project->analyze()];
+        $analyzed = ['analyzer' => $this->project->getAnalyzedData()];
         $config = $this->interpolate($this->project->getConfig(), $analyzed);
         $fileConfig = $this->interpolate($file->getVariables(), $analyzed);
         $blocks = isset($fileConfig['blocks']) ? array_map(
