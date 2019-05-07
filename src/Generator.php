@@ -22,8 +22,6 @@ class Generator
     public function __construct(Project $project)
     {
         $this->project = $project;
-        $loader = new Twig_Loader_String();
-        //$loader->addPath($project->getBasePath(), 'project');
         $loader = new Twig_Loader_Filesystem($project->getBasePath());
 
 
