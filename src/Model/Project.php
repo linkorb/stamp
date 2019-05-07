@@ -4,24 +4,24 @@ namespace Stamp\Model;
 
 class Project
 {
-    protected $files = [];
-    protected $config = [];
-    protected $analyzedData = [];
+    protected $templates = [];
+    protected $variables = [];
     protected $basePath;
 
-    public function __construct($basePath, $config = [])
+    public function __construct($basePath, $variables = [])
     {
         $this->basePath = $basePath;
-        $this->config = $config;
+        $this->variables = $variables;
     }
 
     public function getVariables(): array
     {
-        return $this->config['variables'] ?? [];
+        return $this->variables ?? [];
     }
 
-    public function getConfig(): array {
-        return $this->config;
+    public function setVariables(array $variables): void
+    {
+        $this->variables = $variables;
     }
 
     public function getBasePath()
@@ -29,49 +29,17 @@ class Project
         return $this->basePath;
     }
 
-    public function addFile(File $file)
+    public function addTemplate(Template $template)
     {
-        $this->files[$file->getName()] = $file;
-    }
-    public function getFiles()
-    {
-        return $this->files;
+        $this->templates[] = $template;
     }
 
-    /**
-     * @param array $analyzedData
-     */
-    public function setAnalyzedData(array $analyzedData): void
+    public function getTemplates()
     {
-        $this->analyzedData = $analyzedData;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAnalyzedData(): array
-    {
-        return $this->analyzedData;
+        return $this->templates;
     }
 
     public function getFilepath(string $filename): string {
         return $this->getBasePath() . '/' . $filename;
-    }
-
-    public function hasConsole(): bool
-    {
-        return file_exists(
-            $this->getFilepath('bin/console')
-        );
-    }
-
-    public function console(string $cmd): ?string {
-        $console = $this->getFilepath('bin/console');
-
-        if (!$this->hasConsole()) {
-            return null;
-        }
-
-        return shell_exec("$console $cmd");
     }
 }

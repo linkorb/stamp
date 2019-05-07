@@ -1,6 +1,6 @@
 {
   "name": "linkorb/stamp",
-  "description": "Stamp: Generate common repository files like README.md, LICENSE, etc",
+  "description": "Stamp: Generate files from templates and data files",
   "homepage": "https://github.com/linkorb/stamp",
   "keywords": ["stamp", "linkorb"],
   "type": "library",
@@ -17,7 +17,8 @@
     "twig/twig": "^1.0",
     "symfony/dotenv": "^3.0|^4.0",
     "symfony/routing": "^3.0|^4.0",
-    "zordius/lightncandy": "^0.0|^1.0"
+    "zordius/lightncandy": "^0.0|^1.0",
+    "symfony/expression-language": "^4.2"
   },
   "autoload": {
     "psr-4": {

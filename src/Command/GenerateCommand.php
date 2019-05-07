@@ -23,20 +23,20 @@ class GenerateCommand extends Command
 
         $this
             ->setName('generate')
-            ->setDescription('Generate files from stamp.yml')
+            ->setDescription('Generate files from stamp.yaml')
             ->addOption(
                 'config',
                 'c',
                 InputOption::VALUE_REQUIRED,
                 'Configuration file to use',
-                getcwd() . '/stamp.yml'
+                getcwd() . '/stamp.yaml'
             )
             ->addOption(
                 'json',
                 'j',
                 InputOption::VALUE_REQUIRED,
-                'Json file to use (used by default - metaculous.json)',
-                getcwd() . '/metaculous.json'
+                'JSON file to use (used by default - data.json)',
+                getcwd() . '/data.json'
             )
         ;
     }
@@ -54,18 +54,21 @@ class GenerateCommand extends Command
         $output->writeLn("Using configuration file: " . $configFilename);
         $projectLoader = new YamlProjectLoader();
         $project = $projectLoader->loadFile($configFilename);
+        
 
         $jsonFilename = $input->getOption('json');
         $json = [];
         if (!file_exists($jsonFilename)) {
-            throw new RuntimeException("Json file not found: " . $jsonFilename);
+            throw new RuntimeException("JSON file not found: " . $jsonFilename);
         }
         $jsonData = json_decode(file_get_contents($jsonFilename), true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException("Error parsing json file: " . $jsonFilename);
+            throw new RuntimeException("Error parsing JSON file: " . $jsonFilename);
         }
-        $project->setAnalyzedData($jsonData);
-
+        //TODO: merge jsonData with main project data
+        $variables = array_merge_recursive($jsonData, $project->getVariables());
+        $project->setVariables($variables);
+        // print_r($project); exit();
         $generator = new Generator($project);
         $generator->generate();
     }

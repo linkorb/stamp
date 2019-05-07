@@ -1,0 +1,12 @@
+{{ title }}
+===========
+
+This is the README of {{ title }}
+
+License: {{ license }}
+
+## Products:
+
+{% for code, product in products %}
+* [{{ product.title }}](product.{{ code }}.md)
+{% endfor %}

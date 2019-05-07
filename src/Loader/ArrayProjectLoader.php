@@ -3,20 +3,19 @@
 namespace Stamp\Loader;
 
 use Stamp\Model\Project;
-use Stamp\Model\File;
+use Stamp\Model\Template;
 
 class ArrayProjectLoader
 {   
-    public function load($data, $basePath)
+    public function load(array $config, $basePath)
     {
-        $project = new Project($basePath, $data);
+        $project = new Project($basePath, $config['variables'] ?? []);
         
-        foreach ($data['files'] ?? [] as $name => $fileData) {
-            $template = $fileData['template'] ?? null;
-            $variables = $fileData['variables'] ?? [];
-            $file = new File($name, $template, $variables);
-            $project->addFile($file);
+        foreach ($config['templates'] ?? [] as $templateConfig) {
+            $template = Template::buildFromConfig($templateConfig);
+            $project->addTemplate($template);
         }
+
         return $project;
     }
 }
