@@ -1,4 +1,7 @@
 variables:
+  
+  # repo:
+  #   $ref: repo.yaml
   license: MIT
   title: Hello world
     # license: "{{ analyzer['composer.json']['license'] }}"
@@ -6,10 +9,19 @@ variables:
     schema:
       references:
         username: user_data
-
+  products:
+    $ref: products.json
+  colors:
+    $ref: colors.yaml
+  
+  subdomain: jsonplaceholder
+  todos:
+    $ref: https://{{ subdomain }}.typicode.com/todos
+  
 templates:
   - src: templates/index.md.twig
     dest: "output/index.md"
+    when: "license == 'MIT'"
 
     variables: # Variable overrides specific to this template only
       title: My Hello world

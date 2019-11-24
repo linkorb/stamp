@@ -1,0 +1,9 @@
+red:
+  label: Red
+  code: 'ff0000'
+green:
+  label: Green
+  code: '00ff00'
+blue:
+  label: Blue
+  code: '0000ff'

@@ -8,8 +8,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Stamp\Loader\YamlProjectLoader;
-use Stamp\Generator;
+use Symfony\Component\Yaml\Yaml;
+use Stamp\Model\Project;
+use Loader\Loader;
 use RuntimeException;
 
 class GenerateCommand extends Command
@@ -31,13 +32,6 @@ class GenerateCommand extends Command
                 'Configuration file to use',
                 getcwd() . '/stamp.yaml'
             )
-            ->addOption(
-                'json',
-                'j',
-                InputOption::VALUE_REQUIRED,
-                'JSON file to use (used by default - data.json)',
-                getcwd() . '/data.json'
-            )
         ;
     }
 
@@ -46,30 +40,23 @@ class GenerateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         $configFilename = $input->getOption('config');
 
         if (!file_exists($configFilename)) {
             throw new RuntimeException("File not found: " . $configFilename);
         }
         $output->writeLn("Using configuration file: " . $configFilename);
-        $projectLoader = new YamlProjectLoader();
-        $project = $projectLoader->loadFile($configFilename);
-        
 
-        $jsonFilename = $input->getOption('json');
-        $json = [];
-        if (!file_exists($jsonFilename)) {
-            throw new RuntimeException("JSON file not found: " . $jsonFilename);
-        }
-        $jsonData = json_decode(file_get_contents($jsonFilename), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException("Error parsing JSON file: " . $jsonFilename);
-        }
-        //TODO: merge jsonData with main project data
-        $variables = array_merge_recursive($jsonData, $project->getVariables());
-        $project->setVariables($variables);
-        // print_r($project); exit();
-        $generator = new Generator($project);
-        $generator->generate();
+        $config = Yaml::parse(file_get_contents($configFilename));
+
+        $basePath = dirname($configFilename);
+
+        $loader = Loader::create([]);
+        $project = Project::buildFromConfig($config, 'file://' . $basePath, $loader);
+      
+        // $variables = array_merge_recursive($jsonData, $project->getVariables());
+        // print_r($project->getVariables()); exit();
+        $project->generate();
     }
 }
