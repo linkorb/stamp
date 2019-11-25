@@ -37,9 +37,7 @@ class Project
     
     public static function buildFromConfig(array $config, $basePath, Loader $loader): self
     {
-        $variables = $config['variables'];
-        $loader->postProcess($variables, $basePath, []);
-        $project = new self($basePath, $variables, $loader);
+        $project = new self($basePath, $config, $loader);
 
         foreach ($config['templates'] ?? [] as $templateConfig) {
             $template = Template::buildFromConfig($templateConfig);
@@ -107,12 +105,15 @@ class Project
             }
         }
 
-        foreach ($items as $item) {
+        $subRegex = '/\[\[(.*?)\]\]/i';
+
+        foreach ($items as $key => $item) {
             $variables['item'] = $item;
+            $variables['key'] = $key;
             $src = $template->getSrc();
             $dest = $template->getDest();
-            $src = $interpolator->interpolate($src, $variables);
-            $dest = $interpolator->interpolate($dest, $variables);
+            $src = $interpolator->interpolate($src, $variables, $subRegex);
+            $dest = $interpolator->interpolate($dest, $variables, $subRegex);
             $content = $this->getContent($src);
 
             $extension = pathinfo($src, PATHINFO_EXTENSION);

@@ -48,11 +48,11 @@ class GenerateCommand extends Command
         }
         $output->writeLn("Using configuration file: " . $configFilename);
 
-        $config = Yaml::parse(file_get_contents($configFilename));
-
         $basePath = dirname($configFilename);
 
         $loader = Loader::create([]);
+        $config = $loader->load('file://' . $configFilename);
+        // print_r($config); exit();
         $project = Project::buildFromConfig($config, 'file://' . $basePath, $loader);
       
         // $variables = array_merge_recursive($jsonData, $project->getVariables());
