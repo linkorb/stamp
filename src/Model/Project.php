@@ -186,6 +186,9 @@ class Project
 
     public function normalizeFilename(string $filename): string
     {
+        if (substr($filename, 0, 4)=='file') {
+            return $filename;
+        }
         if (substr($filename, 0, 4)=='http') {
             return $filename;
         }
