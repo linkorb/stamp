@@ -16,39 +16,7 @@ variables:
   
   subdomain: jsonplaceholder
   todos:
-    $ref: https://{{ subdomain }}.typicode.com/todos
+    $ref: https://{{ variables.subdomain }}.typicode.com/todos
   
 templates:
-  - src: templates/index.md.twig
-    dest: "output/index.md"
-    when: "license == 'MIT'"
-
-    variables: # Variable overrides specific to this template only
-      title: My Hello world
-      # blocks: # Include custom documentation blocks with local or remote content
-      #   - "templates/intro.md"
-      #   - "https://raw.githubusercontent.com/rodrigorm/phpqa-make/master/Makefile"
-
-  - src: templates/author.md.mustache # In practice a remote URL would be used here
-    dest: "output/author.{{ item.name }}.md"
-    items: # demonstrate template-specific items
-      - name: joe
-        email: joe@example.com
-      - name: alice
-        email: alice@example.com
-
-  - src: templates/product.md.hbs
-    dest: "output/product.{{ item.key }}.md"
-    items: "{{ dict(products) }}" # create one output (dest) file per item in the dictionary
-
-  - src: "https://raw.githubusercontent.com/linkorb/stamp-templates/master/license/{{ strtolower(license) }}.md"
-    dest: "output/LICENSE" # Output a single file
-  
-  - src: templates/about.html.twig
-    dest: "output/about.html" # HTML / layout example
-
-  # - src: https://example.com/stamps/CONTRIBUTING.md.twig
-  #   dest: output/CONTRIBUTING.md.twig
-
-  # - src: https://example.com/stamps/Dockerfile.twig
-  #   dest: Dockerfile.twig
+  $ref: templates.yaml
