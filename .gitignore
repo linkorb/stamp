@@ -1,5 +1,5 @@
 .DS_Store
 .idea/
-example/output/
+example/output
 vendor/
 autotune.json
