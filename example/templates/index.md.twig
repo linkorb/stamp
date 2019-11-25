@@ -3,10 +3,10 @@
 
 This is the README of {{ title }}
 
-License: {{ license }}
+License: {{ variables.license }}
 
 ## Products:
 
-{% for code, product in products %}
+{% for code, product in variables.products %}
 * [{{ product.title }}](product.{{ code }}.md)
 {% endfor %}

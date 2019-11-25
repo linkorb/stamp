@@ -1,0 +1,9 @@
+# product "{{ item.title }}" ({{ key }})
+
+<img src="{{ item.image }}" />
+
+## Tags:
+
+{% for tag in item.tags %}
+* {{ tag }}
+{% endfor %}
