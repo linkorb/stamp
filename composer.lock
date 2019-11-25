@@ -260,16 +260,16 @@
         },
         {
             "name": "linkorb/loader",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/linkorb/loader.git",
-                "reference": "45eee60396536534448a358ad566a36edb0ef823"
+                "reference": "2835cbefbe83b44963ee2c44e5a6557a6ca93c45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/linkorb/loader/zipball/45eee60396536534448a358ad566a36edb0ef823",
-                "reference": "45eee60396536534448a358ad566a36edb0ef823",
+                "url": "https://api.github.com/repos/linkorb/loader/zipball/2835cbefbe83b44963ee2c44e5a6557a6ca93c45",
+                "reference": "2835cbefbe83b44963ee2c44e5a6557a6ca93c45",
                 "shasum": ""
             },
             "require": {
@@ -309,7 +309,7 @@
                 "linkorb",
                 "loader"
             ],
-            "time": "2019-11-24T15:43:30+00:00"
+            "time": "2019-11-25T11:43:14+00:00"
         },
         {
             "name": "psr/cache",
